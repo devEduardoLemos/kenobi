@@ -1,7 +1,10 @@
+import fitz
 import requests
 import os
+import io
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+
 
 # Load OpenAI API Key
 load_dotenv()
@@ -22,13 +25,43 @@ def fetch_finep_calls():
     extracted_calls = []
     for call in calls:
         title = call.find("h3").text.strip() if call.find("h3") else "Sem título"
-        link = call.find("a")["href"] if call.find("a") else "Sem link"
-        extracted_calls.append(f"{title}: http://finep.gov.br/{link}")
+        link = call.find("a")["href"] if call.find("a") else "#"
+        full_link = f"http://finep.gov.br/{link}"
+        extracted_calls.append({"title": title, "link": full_link})
 
-    return "\n".join(extracted_calls) if extracted_calls else "Nenhuma chamada pública encontrada."
+    return extracted_calls if extracted_calls else "Nenhuma chamada pública encontrada."
 
-# def fetch_finep_pdf():
+def fetch_finep_pdf(extracted_calls):
 
+    pdfs = []
+
+    for call in extracted_calls:
+        response = requests.get(call["link"])
+        if response.status_code !=200:
+            return f"Fail to access the page: {response.status_code}"
+        
+        soup = BeautifulSoup(response.text, "html.parser")
+        editals = soup.find_all("td")
+        for edital in editals:
+            link = edital.find("a")["href"] if edital.find("a") else "#"
+            linkComEdital = link if "edital" in link.lower() else ""
+            linkComEditalPDF = f"http://finep.gov.br{linkComEdital}" if linkComEdital.endswith("pdf") else ""
+            # print(f"{call["title"]}: {linkComEditalPDF}") 
+            pdfs.append({"title": call["title"], "pdfLink":linkComEditalPDF}) if linkComEditalPDF != "" else ""
+    
+    text = ""
+    response = requests.get(pdfs[0]["pdfLink"])
+    if response.status_code == 200:
+        pdf_file = io.BytesIO(response.content)
+    else:
+        print("Fail to get pdf")
+
+    with fitz.open(stream=pdf_file,filetype="pdf") as doc:
+        for page in doc:
+            text+=page.get_text("text")+"\n"
+    
+    return text
+    
 
 def ask_chatgpt(content):
     """Sends scraped data to ChatGPT for analysis."""
@@ -52,7 +85,32 @@ def ask_chatgpt(content):
     else:
         return f"Erro na API: {response.status_code}, {response.text}"
 
+
+def analyze_pdf_chatgpt(content):
+    """Sends scraped data to ChatGPT for analysis."""
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "gpt-4o",
+        "messages": [
+            {"role": "system", "content": "Você é um assistente especializado em analise de documentos."},
+            {"role": "user", "content": f"Esse é o documento\n{content}\n\nDestaque a elegibilidade e cronograma."}
+        ],
+        "temperature": 0.7
+    }
+
+    response = requests.post(OPENAI_API_URL, headers=headers, json=data)
+    if response.status_code == 200:
+        return response.json()["choices"][0]["message"]["content"]
+    else:
+        return f"Erro na API: {response.status_code}, {response.text}"
+
+
 if __name__ == "__main__":
     scraped_data = fetch_finep_calls()
-    chat_response = ask_chatgpt(scraped_data)
-    print("ChatGPT Resumo:", chat_response)
+    # chat_response = ask_chatgpt(scraped_data)
+    # print("ChatGPT Resumo:", chat_response)
+    pdfs = fetch_finep_pdf(scraped_data)
+    print("Resposta do chat:",analyze_pdf_chatgpt(pdfs))
