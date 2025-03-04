@@ -46,21 +46,22 @@ def fetch_finep_pdf(extracted_calls):
             link = edital.find("a")["href"] if edital.find("a") else "#"
             linkComEdital = link if "edital" in link.lower() else ""
             linkComEditalPDF = f"http://finep.gov.br{linkComEdital}" if linkComEdital.endswith("pdf") else ""
-            # print(f"{call["title"]}: {linkComEditalPDF}") 
-            pdfs.append({"title": call["title"],"link": call["link"], "pdfLink":linkComEditalPDF}) if linkComEditalPDF != "" else ""
-    
-    text = ""
-    response = requests.get(pdfs[0]["pdfLink"])
-    if response.status_code == 200:
-        pdf_file = io.BytesIO(response.content)
-    else:
-        print("Fail to get pdf")
+            print(f"{call["title"]}: {linkComEditalPDF}") 
 
-    with fitz.open(stream=pdf_file,filetype="pdf") as doc:
-        for page in doc:
-            text+=page.get_text("text")+"\n"
+            text = ""
+            # response = requests.get(linkComEditalPDF)
+            # if response.status_code == 200:
+            #     pdf_file = io.BytesIO(response.content)
+            # else:
+            #     text = "Fail to get pdf"
+
+            # with fitz.open(stream=pdf_file,filetype="pdf") as doc:
+            #     for page in doc:
+            #         text+=page.get_text("text")+"\n"
+
+        pdfs.append({"title": call["title"],"link": call["link"], "pdfLink":linkComEditalPDF, "pdfContent": text}) if linkComEditalPDF != "" else ""
     
-    return text
+    return pdfs
     
 
 def ask_chatgpt(content):
@@ -113,4 +114,5 @@ if __name__ == "__main__":
     # chat_response = ask_chatgpt(scraped_data)
     # print("ChatGPT Resumo:", chat_response)
     pdfs = fetch_finep_pdf(scraped_data)
-    print("Resposta do chat:",analyze_pdf_chatgpt(pdfs))
+    print (pdfs)
+    # print("Resposta do chat:",analyze_pdf_chatgpt(pdfs))
