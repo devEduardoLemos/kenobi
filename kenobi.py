@@ -47,7 +47,7 @@ def fetch_finep_pdf(extracted_calls):
             linkComEdital = link if "edital" in link.lower() else ""
             linkComEditalPDF = f"http://finep.gov.br{linkComEdital}" if linkComEdital.endswith("pdf") else ""
             # print(f"{call["title"]}: {linkComEditalPDF}") 
-            pdfs.append({"title": call["title"], "pdfLink":linkComEditalPDF}) if linkComEditalPDF != "" else ""
+            pdfs.append({"title": call["title"],"link": call["link"], "pdfLink":linkComEditalPDF}) if linkComEditalPDF != "" else ""
     
     text = ""
     response = requests.get(pdfs[0]["pdfLink"])
