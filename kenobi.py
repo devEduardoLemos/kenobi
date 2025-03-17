@@ -1,9 +1,9 @@
-import fitz
 import requests
 import os
-import io
+import json
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
+from responseDTO import ResponseDTO
 
 
 # Load OpenAI API Key
@@ -20,52 +20,49 @@ def fetch_finep_calls():
         return f"Erro ao acessar o site: {response.status_code}"
 
     soup = BeautifulSoup(response.text, "html.parser")
-    calls = soup.find_all("div", class_="item")  # Adjust based on site structure    
 
-    extracted_calls = []
-    for call in calls:
-        title = call.find("h3").text.strip() if call.find("h3") else "Sem título"
-        link = call.find("a")["href"] if call.find("a") else "#"
-        full_link = f"http://finep.gov.br/{link}"
-        extracted_calls.append({"title": title, "link": full_link})
+    return soup 
 
-    return extracted_calls if extracted_calls else "Nenhuma chamada pública encontrada."
+def parseToResponseDTO(responseText):
+    """Parses the JSON response and converts it into DTOs."""
+    # Extract JSON part from the response
 
-def fetch_finep_pdf(extracted_calls):
-
-    pdfs = []
-
-    for call in extracted_calls:
-        response = requests.get(call["link"])
-        if response.status_code !=200:
-            return f"Fail to access the page: {response.status_code}"
-        
-        soup = BeautifulSoup(response.text, "html.parser")
-        editals = soup.find_all("td")
-        for edital in editals:
-            link = edital.find("a")["href"] if edital.find("a") else "#"
-            linkComEdital = link if "edital" in link.lower() else ""
-            linkComEditalPDF = f"http://finep.gov.br{linkComEdital}" if linkComEdital.endswith("pdf") else ""
-            print(f"{call["title"]}: {linkComEditalPDF}") 
-
-            text = ""
-            # response = requests.get(linkComEditalPDF)
-            # if response.status_code == 200:
-            #     pdf_file = io.BytesIO(response.content)
-            # else:
-            #     text = "Fail to get pdf"
-
-            # with fitz.open(stream=pdf_file,filetype="pdf") as doc:
-            #     for page in doc:
-            #         text+=page.get_text("text")+"\n"
-
-        pdfs.append({"title": call["title"],"link": call["link"], "pdfLink":linkComEditalPDF, "pdfContent": text}) if linkComEditalPDF != "" else ""
+    print(f"This is the original text: {responseText}")
+    jsonStart = responseText.find("{")  # Locate where JSON starts
+    jsonEnd = responseText.rfind("```")
+    jsonData = responseText[jsonStart:jsonEnd]  # Extract only JSON content
     
-    return pdfs
-    
+    print(f"This is the json after tretment: {jsonData}")
+    # Parse JSON
+    try:
+        parsedJson = json.loads(jsonData)
+        calls = parsedJson.get("oportunidades", [])  # Get the 'chamadas' array
+    except json.JSONDecodeError as e:
+        print(f"❌ Error parsing JSON: {e}")
+        return []
 
-def ask_chatgpt(content):
+    # Convert JSON into DTOs
+    opportunities = [
+        ResponseDTO(
+            title=call.get("titulo", "N/A"),
+            publicationDate=call.get("data_publicacao", "N/A"),
+            deadline=call.get("prazo_envio", "N/A"),
+            fundingSource=call.get("fonte_recurso", "N/A"),
+            targetAudience=call.get("publico_alvo", "N/A"),
+            theme=call.get("tema", "N/A"),
+            link=call.get("link", "N/A"),
+            status=call.get("status","N/A")
+        )
+        for call in calls
+    ]
+
+    return opportunities
+
+def ask_chatgpt():
     """Sends scraped data to ChatGPT for analysis."""
+    # content = title + "" + link
+
+    content = fetch_finep_calls()
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
@@ -74,30 +71,8 @@ def ask_chatgpt(content):
     data = {
         "model": "gpt-4o",
         "messages": [
-            {"role": "system", "content": "Você é um assistente útil que analisa chamadas públicas."},
-            {"role": "user", "content": f"Essas são as chamadas públicas extraídas do site FINEP:\n{content}\n\nResuma as oportunidades disponíveis."}
-        ],
-        "temperature": 0.7
-    }
-
-    response = requests.post(OPENAI_API_URL, headers=headers, json=data)
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
-    else:
-        return f"Erro na API: {response.status_code}, {response.text}"
-
-
-def analyze_pdf_chatgpt(content):
-    """Sends scraped data to ChatGPT for analysis."""
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "model": "gpt-4o",
-        "messages": [
-            {"role": "system", "content": "Você é um assistente especializado em analise de documentos."},
-            {"role": "user", "content": f"Esse é o documento\n{content}\n\nDestaque a elegibilidade e cronograma."}
+            {"role": "system", "content": "Você é um assistente útil que analisa sites de chamadas públicas."},
+            {"role": "user", "content": f"Esse é o conteúdo de um site de chamadas públicas extraídas do site FINEP:\n{content}\n\nResuma as oportunidades disponíveis e seus links, o resumo deve conter título do edital, data de publicação, prazo para envio de propostas, fonte do recurso, publico alvo, tema ou áreas, link, status. Traga a resposta em formato json, o array que contém toda informação deve ter o nome de oportunidades"}
         ],
         "temperature": 0.7
     }
@@ -110,9 +85,14 @@ def analyze_pdf_chatgpt(content):
 
 
 if __name__ == "__main__":
-    scraped_data = fetch_finep_calls()
-    # chat_response = ask_chatgpt(scraped_data)
-    # print("ChatGPT Resumo:", chat_response)
-    pdfs = fetch_finep_pdf(scraped_data)
-    print (pdfs)
-    # print("Resposta do chat:",analyze_pdf_chatgpt(pdfs))
+    response = ask_chatgpt()
+    print(f"This is the response: {response}")
+    responseDTO = parseToResponseDTO(response)
+    # for dto in infoDTO:
+    #     resume = ask_chatgpt(dto.title,dto.link)
+    #     response = ResponseDTO(dto.title, resume,'','',dto.pdfLink)
+        # print(dto.title)
+    
+    print(f"This is the json:{responseDTO}")
+        
+
