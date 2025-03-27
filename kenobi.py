@@ -38,18 +38,19 @@ def parseToResponseDTO(responseText):
         parsedJson = json.loads(jsonData)
         calls = parsedJson.get("oportunidades", [])  # Get the 'chamadas' array
     except json.JSONDecodeError as e:
-        print(f"❌ Error parsing JSON: {e}")
+        # print(f"❌ Error parsing JSON: {e}")
         return []
 
     # Convert JSON into DTOs
     opportunities = [
         ResponseDTO(
             title=call.get("titulo", "N/A"),
+            resume = call.get("objetivo","N/A"),
             publicationDate=call.get("data_publicacao", "N/A"),
             deadline=call.get("prazo_envio", "N/A"),
             fundingSource=call.get("fonte_recurso", "N/A"),
             targetAudience=call.get("publico_alvo", "N/A"),
-            theme=call.get("tema", "N/A"),
+            theme=call.get("tema_areas", "N/A"),
             link=call.get("link", "N/A"),
             status=call.get("status","N/A")
         )
@@ -72,7 +73,7 @@ def ask_chatgpt():
         "model": "gpt-4o",
         "messages": [
             {"role": "system", "content": "Você é um assistente útil que analisa sites de chamadas públicas."},
-            {"role": "user", "content": f"Esse é o conteúdo de um site de chamadas públicas extraídas do site FINEP:\n{content}\n\nResuma as oportunidades disponíveis e seus links, o resumo deve conter título do edital, data de publicação, prazo para envio de propostas, fonte do recurso, publico alvo, tema ou áreas, link, status. Traga a resposta em formato json, o array que contém toda informação deve ter o nome de oportunidades"}
+            {"role": "user", "content": f"Esse é o conteúdo de um site de chamadas públicas extraídas do site FINEP:\n{content}\n\nResuma as oportunidades disponíveis. Traga a resposta em formato json, o array que contém toda informação deve ter o nome de oportunidades, e os seguintes campos: titulo, objetivo, data_publicacao, prazo_envio, fonte_recurso, publico_alvo, tema_areas, link, status"}
         ],
         "temperature": 0.7
     }
