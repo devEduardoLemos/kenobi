@@ -3,7 +3,8 @@ import os
 import json
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from responseDTO import ResponseDTO
+from kenobi.dtos.response_dto import ResponseDTO
+from kenobi.services.email_service import build_email_html, send_email
 
 
 # Load OpenAI API Key
@@ -46,10 +47,10 @@ def parseToResponseDTO(responseText):
         ResponseDTO(
             title=call.get("titulo", "N/A"),
             resume = call.get("objetivo","N/A"),
-            publicationDate=call.get("data_publicacao", "N/A"),
+            publication_date=call.get("data_publicacao", "N/A"),
             deadline=call.get("prazo_envio", "N/A"),
-            fundingSource=call.get("fonte_recurso", "N/A"),
-            targetAudience=call.get("publico_alvo", "N/A"),
+            funding_source=call.get("fonte_recurso", "N/A"),
+            target_audience=call.get("publico_alvo", "N/A"),
             theme=call.get("tema_areas", "N/A"),
             link=call.get("link", "N/A"),
             status=call.get("status","N/A")
@@ -89,11 +90,24 @@ if __name__ == "__main__":
     response = ask_chatgpt()
     print(f"This is the response: {response}")
     responseDTO = parseToResponseDTO(response)
-    # for dto in infoDTO:
-    #     resume = ask_chatgpt(dto.title,dto.link)
-    #     response = ResponseDTO(dto.title, resume,'','',dto.pdfLink)
-        # print(dto.title)
     
     print(f"This is the json:{responseDTO}")
+
+    html = build_email_html(responseDTO,"Testing new arch")
+    
+    response = send_email(
+    from_addr="naoresponder@gruposkip.com",
+    to_addr="eduardo.lemos16@gmail.com",
+    subject="Testing new arch2",
+    html_body=html,
+    api_url="http://localhost:8080//api/email")
+
+    print("✅ Email sent!" if response.ok else f"❌ {response.status_code}: {response.text}")
+    
+
+
+
+
+    
         
 
