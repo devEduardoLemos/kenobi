@@ -28,18 +28,18 @@ def parseToResponseDTO(responseText):
     """Parses the JSON response and converts it into DTOs."""
     # Extract JSON part from the response
 
-    print(f"This is the original text: {responseText}")
+    # print(f"This is the original text: {responseText}")
     jsonStart = responseText.find("{")  # Locate where JSON starts
     jsonEnd = responseText.rfind("```")
     jsonData = responseText[jsonStart:jsonEnd]  # Extract only JSON content
     
-    print(f"This is the json after tretment: {jsonData}")
+    # print(f"This is the json after tretment: {jsonData}")
     # Parse JSON
     try:
         parsedJson = json.loads(jsonData)
         calls = parsedJson.get("oportunidades", [])  # Get the 'chamadas' array
     except json.JSONDecodeError as e:
-        # print(f"❌ Error parsing JSON: {e}")
+        print(f"❌ Error parsing JSON: {e}")
         return []
 
     # Convert JSON into DTOs
@@ -88,17 +88,17 @@ def ask_chatgpt():
 
 if __name__ == "__main__":
     response = ask_chatgpt()
-    print(f"This is the response: {response}")
+    # print(f"This is the response: {response}")
     responseDTO = parseToResponseDTO(response)
     
-    print(f"This is the json:{responseDTO}")
+    # print(f"This is the json:{responseDTO}")
 
     html = build_email_html(responseDTO,"Testing new arch")
     
     response = send_email(
     from_addr="naoresponder@gruposkip.com",
-    to_addr="eduardo.lemos16@gmail.com",
-    subject="Testing new arch2",
+    to_addr="eduardo.lemos16@gmail.com,eduardo.lemos@gruposkip.com, lizmatiaslisboa@gmail.com,thallescarvalhocm@gmail.com  ",
+    subject="Testing Multiple receivers",
     html_body=html,
     api_url="http://localhost:8080//api/email")
 
