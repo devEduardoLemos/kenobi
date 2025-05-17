@@ -1,3 +1,5 @@
+#kenobi/tests/preview_email.py
+
 import os
 import webbrowser
 from kenobi.dtos.response_dto import ResponseDTO
