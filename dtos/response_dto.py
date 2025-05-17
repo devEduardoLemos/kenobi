@@ -5,10 +5,10 @@ class ResponseDTO:
     """Data Transfer Object for FINEP Calls"""
     title: str 
     resume: str
-    publicationDate: str
+    publication_date: str
     deadline: str
-    fundingSource: str
-    targetAudience: str
+    funding_source: str
+    target_audience: str
     theme: str
     link: str
     status: str
