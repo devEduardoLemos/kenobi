@@ -6,148 +6,187 @@
   <meta charset="UTF-8">
   <title>{{ subject }}</title>
   <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Poppins:wght@600&display=swap');
+
     body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
+      background-color: #f4f5f7;
       margin: 0;
       padding: 20px;
-      color: #333;
+      color: #1A1A1A;
+    }
+
+    .container{
+      background-color: white;
+      width: 748px;
     }
 
     .header {
       text-align: center;
+      padding: 24px 20px 32px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .header img {
+      width: 258px;
+      margin-bottom: 10px;
+    }
+
+    .container-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0px auto 10px auto;
+    }
+
+    .container-card h1{
+      font-family: 'Poppins', sans-serif;
       font-size: 24px;
-      font-weight: bold;
-      color: #0275d8;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: auto;
-      margin-bottom: 20px;
+      font-weight: 600;
+      padding-bottom: 28px;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin: 0;
     }
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #f8f9fa;
+    .card {
+      background-color: #ffffff;
+      border-radius: 6px;
+      border: 1px solid #CDCCCC;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+      width: 700px;
+      height: 310px;
     }
 
-    .card-cell {
-      width: 50%;
-      vertical-align: top;
-      background: #fff;
-      border-radius: 8px;
-      border-left: 4px solid #0275d8;
-      padding: 15px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .card-top-border {
+      height: 24px;
+      background-color: #221F77; /* azul escuro */
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
     }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #0275d8;
+    .card-content {
+      padding: 0px 20px 0px 20px;
     }
 
-    .card-status {
-      font-size: 12px;
-      font-weight: bold;
-      text-align: right;
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .status-open {
-      color: #28a745;
-    }
-
-    .status-closed {
-      color: #d9534f;
-    }
-
-    .card-details {
-      font-size: 12px;
-      line-height: 1.4;
-      color: #555;
-      margin-top: 8px;
-    }
-
-    .details-table td {
-      padding-bottom: 4px;
-    }
-
-    .btn-container {
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .btn-link {
-      display: inline-block;
-      background-color: #0275d8;
-      color: #ffffff;
-      padding: 8px 12px;
-      border-radius: 4px;
+    .btn-edit {
+      background-color: #204C8E;
+      color: white;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 12px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
     }
 
-    .btn-link:hover {
-      background: #025aa5;
+    .info-list {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      padding: 0;
+      font-size: 14px;
+      color: #1A1A1A;
+      line-height: 1.6;
+      margin-top: 0;
+      margin-bottom: 15px;
+      gap: 50px;
+    }
+
+    .info-list li {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .list-left li{
+      font-weight: 500;
+      color: rgb(92, 92, 92);
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      color: rgb(92, 92, 92);
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .footer a {
+      text-decoration: underline;
+        color: rgb(92, 92, 92);
+      margin: 0 5px;
+    }
+
+    .footer address {
+      margin-top: 10px;
+      margin-bottom: 30px;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+  <div class="header">
+    <img src="https://imgur.com/rvTTPrY.png" alt="Kenobi Logo">
+  </div>
 
-  <div class="header">{{ subject }}</div>
-
-  <table class="container" cellspacing="0" cellpadding="10">
+  <div class="container-card">
+      <h1>Encontre a oportunidade ideal para financiar e acelerar o seu projeto/empresa</h1>
     {% for i in range(opportunities|length) %}
-      {% if loop.index0 % 2 == 0 %}
-      <tr>
-      {% endif %}
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                {{ opportunities[i].title }}
-              </td>
-              <td class="card-status {% if opportunities[i].status|default('')|lower == 'aberta' %}status-open{% else %}status-closed{% endif %}">
-                {{ opportunities[i].status }}
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> {{ opportunities[i].fundingSource }}</td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> {{ opportunities[i].publicationDate }}</td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> {{ opportunities[i].deadline }}</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> {{ opportunities[i].targetAudience }}</td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> {{ opportunities[i].theme }}</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="{{ opportunities[i].link }}" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>{{ opportunities[i].title }}</h2>
+            <a href="{{ opportunities[i].link }}" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      {% if loop.index0 % 2 == 1 or loop.last %}
-      </tr>
-      {% endif %}
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> {{ opportunities[i].target_audience }}</strong></li>
+              <li><strong> {{ opportunities[i].resume }}</strong></li>
+              <li><strong> {{ opportunities[i].funding_source }}</strong></li>
+              <li><strong> {{ opportunities[i].deadline }}</strong></li>
+              <li><strong> {{ opportunities[i].funding_source }}</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     {% endfor %}
-  </table>
+  </div>
 
+  <div class="footer">
+    <div class="sub-cancel">
+      <a href="kenobi.gruposkip.com">kenobi.gruposkip.com</a>|<a href="{{ unsubscribe_url }}">Cancelar inscrição</a>
+    </div>
+    <address>R. Riachuelo, 1200 - São José, Aracaju - SE, 49015-160</address>
+  </div>
+  </div>
 </body>
 </html>

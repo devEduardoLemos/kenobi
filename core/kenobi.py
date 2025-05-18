@@ -99,7 +99,7 @@ if __name__ == "__main__":
     
     response = send_email(
     from_addr="naoresponder@gruposkip.com",
-    to_addr="eduardo.lemos16@gmail.com,eduardo.lemos@gruposkip.com, lizmatiaslisboa@gmail.com,thallescarvalhocm@gmail.com  ",
+    to_addr="eduardo.lemos16@gmail.com,eduardo.lemos@gruposkip.com",
     subject="Testing Multiple receivers",
     html_body=html,
     api_url="http://localhost:8080//api/email")

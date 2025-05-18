@@ -1,366 +1,322 @@
-<!-- kenobi/tests/email_preview.html -->
- 
+<!-- kenobi/templates/email_template.html -->
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <title>Skip Financial Letter - Preview</title>
   <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Poppins:wght@600&display=swap');
+
     body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
+      background-color: #f4f5f7;
       margin: 0;
       padding: 20px;
-      color: #333;
+      color: #1A1A1A;
+    }
+
+    .container{
+      background-color: white;
+      width: 748px;
     }
 
     .header {
       text-align: center;
+      padding: 24px 20px 32px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .header img {
+      width: 258px;
+      margin-bottom: 10px;
+    }
+
+    .container-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0px auto 10px auto;
+    }
+
+    .container-card h1{
+      font-family: 'Poppins', sans-serif;
       font-size: 24px;
-      font-weight: bold;
-      color: #0275d8;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: auto;
-      margin-bottom: 20px;
+      font-weight: 600;
+      padding-bottom: 28px;
+      padding-left: 24px;
+      padding-right: 24px;
+      margin: 0;
     }
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #f8f9fa;
+    .card {
+      background-color: #ffffff;
+      border-radius: 6px;
+      border: 1px solid #CDCCCC;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+      width: 700px;
+      height: 310px;
     }
 
-    .card-cell {
-      width: 50%;
-      vertical-align: top;
-      background: #fff;
-      border-radius: 8px;
-      border-left: 4px solid #0275d8;
-      padding: 15px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .card-top-border {
+      height: 24px;
+      background-color: #221F77; /* azul escuro */
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
     }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #0275d8;
+    .card-content {
+      padding: 0px 20px 0px 20px;
     }
 
-    .card-status {
-      font-size: 12px;
-      font-weight: bold;
-      text-align: right;
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .status-open {
-      color: #28a745;
-    }
-
-    .status-closed {
-      color: #d9534f;
-    }
-
-    .card-details {
-      font-size: 12px;
-      line-height: 1.4;
-      color: #555;
-      margin-top: 8px;
-    }
-
-    .details-table td {
-      padding-bottom: 4px;
-    }
-
-    .btn-container {
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .btn-link {
-      display: inline-block;
-      background-color: #0275d8;
-      color: #ffffff;
-      padding: 8px 12px;
-      border-radius: 4px;
+    .btn-edit {
+      background-color: #204C8E;
+      color: white;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 12px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
     }
 
-    .btn-link:hover {
-      background: #025aa5;
+    .info-list {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      padding: 0;
+      font-size: 14px;
+      color: #1A1A1A;
+      line-height: 1.6;
+      margin-top: 0;
+      margin-bottom: 15px;
+      gap: 50px;
+    }
+
+    .info-list li {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .list-left li{
+      font-weight: 500;
+      color: rgb(92, 92, 92);
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      color: rgb(92, 92, 92);
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .footer a {
+      text-decoration: underline;
+        color: rgb(92, 92, 92);
+      margin: 0 5px;
+    }
+
+    .footer address {
+      margin-top: 10px;
+      margin-bottom: 30px;
+      font-style: normal;
+      font-family: 'Inter', sans-serif;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+  <div class="header">
+    <img src="https://imgur.com/rvTTPrY.png" alt="Kenobi Logo">
+  </div>
 
-  <div class="header">Skip Financial Letter - Preview</div>
-
-  <table class="container" cellspacing="0" cellpadding="10">
+  <div class="container-card">
+      <h1>Encontre a oportunidade ideal para financiar e acelerar o seu projeto/empresa</h1>
     
-      
-      <tr>
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Programa de Inovação Tecnológica
-              </td>
-              <td class="card-status status-closed">
-                Active
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 30/06/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Indústria 4.0</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-001" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Programa de Inovação Tecnológica</h2>
+            <a href="http://finep.gov.br/edital-001" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> Empresas</strong></li>
+              <li><strong> Apoio a projetos de inovação no setor industrial.</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+              <li><strong> 30/06/2025</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Pesquisa em Saúde Pública
-              </td>
-              <td class="card-status status-closed">
-                Closed
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 15/05/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Saúde</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-002" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Pesquisa em Saúde Pública</h2>
+            <a href="http://finep.gov.br/edital-002" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
-      </tr>
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> ICTs, Universidades</strong></li>
+              <li><strong> Financiamento de pesquisas para melhorias no SUS.</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+              <li><strong> 15/05/2025</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-      
-      <tr>
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Programa de Inovação Tecnológica
-              </td>
-              <td class="card-status status-closed">
-                Active
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 30/06/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Indústria 4.0</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-001" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Programa de Inovação Tecnológica</h2>
+            <a href="http://finep.gov.br/edital-001" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> Empresas</strong></li>
+              <li><strong> Apoio a projetos de inovação no setor industrial.</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+              <li><strong> 30/06/2025</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Pesquisa em Saúde Pública
-              </td>
-              <td class="card-status status-closed">
-                Closed
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 15/05/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Saúde</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-002" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Pesquisa em Saúde Pública</h2>
+            <a href="http://finep.gov.br/edital-002" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
-      </tr>
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> ICTs, Universidades</strong></li>
+              <li><strong> Financiamento de pesquisas para melhorias no SUS.</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+              <li><strong> 15/05/2025</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-      
-      <tr>
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Programa de Inovação Tecnológica
-              </td>
-              <td class="card-status status-closed">
-                Active
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 30/06/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Indústria 4.0</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-001" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Programa de Inovação Tecnológica</h2>
+            <a href="http://finep.gov.br/edital-001" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> Empresas</strong></li>
+              <li><strong> Apoio a projetos de inovação no setor industrial.</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+              <li><strong> 30/06/2025</strong></li>
+              <li><strong> Finep, BNDES</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-      
-
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                Pesquisa em Saúde Pública
-              </td>
-              <td class="card-status status-closed">
-                Closed
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> </td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> </td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> 15/05/2025</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> </td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> Saúde</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="http://finep.gov.br/edital-002" target="_blank" class="btn-link">Detalhes</a>
+      <div class="card">
+        <div class="card-top-border"></div>
+        <div class="card-content">
+          <div class="card-header">
+            <h2>Pesquisa em Saúde Pública</h2>
+            <a href="http://finep.gov.br/edital-002" class="btn-edit">Acessar edital</a>
           </div>
-
-        </td>
-
-      
-      </tr>
-      
+          <ul class="info-list">
+            <div class="list-left">
+              <li>👥 Público-alvo:</li>
+              <li>🎯 Objetivo:</li>
+              <li>💰 Recursos:</li>
+              <li>📅 Prazo:</li>
+              <li>🏛️ Fonte de recurso:</li>
+            </div>
+            <div class="list-right">
+              <li><strong> ICTs, Universidades</strong></li>
+              <li><strong> Financiamento de pesquisas para melhorias no SUS.</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+              <li><strong> 15/05/2025</strong></li>
+              <li><strong> Finep, Ministério da Saúde</strong></li>
+            </div>
+          </ul>
+        </div>
+      </div>
     
-  </table>
+  </div>
 
+  <div class="footer">
+    <div class="sub-cancel">
+      <a href="kenobi.gruposkip.com">kenobi.gruposkip.com</a>|<a href="">Cancelar inscrição</a>
+    </div>
+    <address>R. Riachuelo, 1200 - São José, Aracaju - SE, 49015-160</address>
+  </div>
+  </div>
 </body>
 </html>
