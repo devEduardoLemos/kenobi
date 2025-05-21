@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from kenobi.dtos.response_dto import ResponseDTO
 from kenobi.services.email_service import build_email_html, send_email
-from kenobi.tests.preview_email import generate_test_opportunities
 
 
 # Load OpenAI API Key
@@ -90,20 +89,18 @@ def ask_chatgpt():
 
 
 if __name__ == "__main__":
-    # response = ask_chatgpt()
-    # print(f"This is the response: {response}")
-    responseDTO = generate_test_opportunities()#parseToResponseDTO(response)
-    
-    # print(f"This is the json:{responseDTO}")
+    response = ask_chatgpt()
 
-    html = build_email_html(responseDTO,"Testing new arch")
+    responseDTO = parseToResponseDTO(response)
+
+    html = build_email_html(responseDTO,"")
     
     response = send_email(
     from_addr="naoresponder@gruposkip.com",
     to_addr="eduardo.lemos16@gmail.com,eduardo.lemos@gruposkip.com,lizmatiaslisboa@gmail.com,thallescarvalhocm@gmail.com",
-    subject="Testing Multiple receivers",
+    subject="Testing Scheduled sending",
     html_body=html,
-    api_url="http://localhost:8080//api/email")
+    api_url="http://18.222.179.149:8080//api/email")
 
     print("✅ Email sent!" if response.ok else f"❌ {response.status_code}: {response.text}")
     
