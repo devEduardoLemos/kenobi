@@ -4,148 +4,195 @@
   <meta charset="UTF-8">
   <title>{{ subject }}</title>
   <style>
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
       margin: 0;
-      padding: 20px;
-      color: #333;
+      padding: 0;
+      background-color: white;
+      color: #1A1A1A;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 748px;
+      height: 90%;
+      margin: 0 auto;
+      padding-bottom: 5px;
+      background-color: #fcfcfc;
     }
 
     .header {
       text-align: center;
+      padding: 24px 20px 0;
+    }
+
+    .header img {
+      width: 258px;
+    }
+
+    .container-card h1 {
       font-size: 24px;
       font-weight: bold;
-      color: #0275d8;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: auto;
-      margin-bottom: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #f8f9fa;
-    }
-
-    .card-cell {
-      width: 50%;
-      vertical-align: top;
-      background: #fff;
-      border-radius: 8px;
-      border-left: 4px solid #0275d8;
-      padding: 15px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+      padding: 40px 20px 30px;
+      margin: 0;
+      text-align: justify;
     }
 
     .card-title {
-      font-size: 16px;
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 20px;
       font-weight: bold;
-      color: #0275d8;
+      width: 500px;
+      word-break: break-word;
     }
 
-    .card-status {
-      font-size: 12px;
-      font-weight: bold;
-      text-align: right;
+    .card-table {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: collapse;
     }
 
-    .status-open {
-      color: #28a745;
+    .card-cell {
+      width: 100%;
+      padding: 10px 20px;
     }
 
-    .status-closed {
-      color: #d9534f;
+    .card {
+      border: 1px solid #CDCCCC;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 700px;
+      height: 310px;
+      background-color: white;
     }
 
-    .card-details {
-      font-size: 12px;
-      line-height: 1.4;
-      color: #555;
-      margin-top: 8px;
+    .card-top-border {
+      height: 24px;
+      background-color: #221F77;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      padding: 0;
     }
 
-    .details-table td {
-      padding-bottom: 4px;
+    .card-content {
+      padding: 0px 16px 0px;
+      position: relative;
     }
 
-    .btn-container {
-      margin-top: 10px;
+    .card-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .btn-edit {
       text-align: center;
-    }
-
-    .btn-link {
-      display: inline-block;
-      background-color: #0275d8;
-      color: #ffffff;
-      padding: 8px 12px;
-      border-radius: 4px;
-      text-decoration: none;
+      background-color: #204C8E;
+      color: white !important;
+      text-decoration: none !important;
+      padding: 10px 22px;
+      border-radius: 8px;
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
+      min-width: 100px;
+      margin-top: 5px;
+      margin-right: 5px;
+      display: inline-block;
+      white-space: nowrap;
     }
 
-    .btn-link:hover {
-      background: #025aa5;
+    .info-list {
+      width: 100%;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-top: 12px;
     }
+
+    .info-list tr td {
+      padding: 6px 0;
+    }
+
+    .info-label {
+      color: #5c5c5c;
+      font-weight: 600;
+      min-width: 200px;
+    }
+
+    .info-value {
+      font-weight: bold;
+      color: #1A1A1A;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      color: #5c5c5c;
+      margin: 30px 0;
+    }
+
+    .footer a {
+      color: #5c5c5c;
+      text-decoration: underline;
+      margin: 0 5px;
+    }
+
+    .footer address {
+      margin-top: 10px;
+      /* margin-bottom: 30px; */
+      font-style: normal;
+    }
+
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="header">
+      <img src="https://imgur.com/Nkhq2wE.png" alt="Kenobi Logo">
+    </div>
 
-  <div class="header">{{ subject }}</div>
+    <div class="container-card">
+      <h1>Encontre a oportunidade ideal para financiar e acelerar o seu projeto/empresa</h1>
 
-  <table class="container" cellspacing="0" cellpadding="10">
-    {% for i in range(opportunities|length) %}
-      {% if loop.index0 % 2 == 0 %}
-      <tr>
-      {% endif %}
+      <table class="card-table">
+        {% for i in range(opportunities|length) %}
+        <tr>
+          <td class="card-cell">
+            <table class="card">
+              <tr><td class="card-top-border"></td></tr>
+              <tr><td class="card-content">
+                <table class="card-header" width="100%">
+                  <tr>
+                    <td><p class="card-title">{{ opportunities[i].title }}</p></td>
+                    <td valign="top" align="right">
+                      <a href="{{ opportunities[i].link }}" class="btn-edit">Acessar edital</a>
+                    </td>
+                  </tr>
+                </table>
+                <table class="info-list">
+                  <tr><td class="info-label">👥 Público-alvo:</td><td class="info-value">{{ opportunities[i].target_audience }}</td></tr>
+                  <tr><td class="info-label">🎯 Objetivo:</td><td class="info-value">{{ opportunities[i].resume }}</td></tr>
+                  <tr><td class="info-label">💰 Recursos:</td><td class="info-value">{{ opportunities[i].funding_source }}</td></tr>
+                  <tr><td class="info-label">📅 Prazo:</td><td class="info-value">{{ opportunities[i].deadline }}</td></tr>
+                  <tr><td class="info-label">🏛️ Fonte de recurso:</td><td class="info-value">{{ opportunities[i].funding_source }}</td></tr>
+                </table>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
 
-        <td class="card-cell">
-
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="card-title">
-                {{ opportunities[i].title }}
-              </td>
-              <td class="card-status {% if opportunities[i].status|default('')|lower == 'aberta' %}status-open{% else %}status-closed{% endif %}">
-                {{ opportunities[i].status }}
-              </td>
-            </tr>
-          </table>
-
-          <table class="details-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td>🏛️ <strong>Entidade:</strong> {{ opportunities[i].fundingSource }}</td>
-            </tr>
-            <tr>
-              <td>📅 <strong>Publicação:</strong> {{ opportunities[i].publicationDate }}</td>
-            </tr>
-            <tr>
-              <td>⏳ <strong>Encerramento:</strong> {{ opportunities[i].deadline }}</td>
-            </tr>
-            <tr>
-              <td>👥 <strong>Público-Alvo:</strong> {{ opportunities[i].targetAudience }}</td>
-            </tr>
-            <tr>
-              <td>🌍 <strong>Área:</strong> {{ opportunities[i].theme }}</td>
-            </tr>
-          </table>
-
-          <div class="btn-container">
-            <a href="{{ opportunities[i].link }}" target="_blank" class="btn-link">Detalhes</a>
-          </div>
-
-        </td>
-
-      {% if loop.index0 % 2 == 1 or loop.last %}
-      </tr>
-      {% endif %}
-    {% endfor %}
-  </table>
-
+    <div class="footer">
+      <div><a href="https://kenobi.gruposkip.com">kenobi.gruposkip.com</a> | <a href="{{ unsubscribe_url }}">Cancelar inscrição</a></div>
+      <address>R. Riachuelo, 1200 - São José, Aracaju - SE, 49015-160</address>
+    </div>
+  </div>
 </body>
 </html>

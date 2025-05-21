@@ -1,3 +1,5 @@
+#kenobi/tests/preview_email.py
+
 import os
 import webbrowser
 from kenobi.dtos.response_dto import ResponseDTO
@@ -29,8 +31,8 @@ def generate_test_opportunities():
             status="Closed"
         ),
          ResponseDTO(
-            title="Programa de Inovação Tecnológica",
-            resume="Apoio a projetos de inovação no setor industrial.",
+            title="AÇÃO CONJUNTA DE FOMENTO FINEP -BNDES",
+            resume="Fomento conjunto entre Finep e BNDES.",
             publication_date="10/03/2025",
             deadline="30/06/2025",
             funding_source="Finep, BNDES",
@@ -40,33 +42,33 @@ def generate_test_opportunities():
             status="Active"
         ),
         ResponseDTO(
-            title="Pesquisa em Saúde Pública",
-            resume="Financiamento de pesquisas para melhorias no SUS.",
+            title="Programa Mulheres Inovadoras - 6ª edição",
+            resume="Apoiar inovação liderada por mulheres.",
             publication_date="01/02/2025",
             deadline="15/05/2025",
-            funding_source="Finep, Ministério da Saúde",
-            target_audience="ICTs, Universidades",
+            funding_source="Finep",
+            target_audience="Empresas",
             theme="Saúde",
             link="http://finep.gov.br/edital-002",
             status="Closed"
         ),
          ResponseDTO(
-            title="Programa de Inovação Tecnológica",
-            resume="Apoio a projetos de inovação no setor industrial.",
+            title="PRÓ-INFRA CENTROS TEMÁTICOS - Implantação e melhoria da infraestrutura de pesquisa para solucionar desafios em áreas temáticas críticas",
+            resume="Melhoria da infraestrutura de pesquisa.",
             publication_date="10/03/2025",
-            deadline="30/06/2025",
-            funding_source="Finep, BNDES",
+            deadline="03/05/2024",
+            funding_source="FNDCT",
             target_audience="Empresas",
             theme="Indústria 4.0",
             link="http://finep.gov.br/edital-001",
-            status="Active"
+            status="Closed"
         ),
         ResponseDTO(
-            title="Pesquisa em Saúde Pública",
-            resume="Financiamento de pesquisas para melhorias no SUS.",
+            title="4a Chamada Pública Conjunta entre Finep e RCN",
+            resume="Parceria entre Finep e RCN.",
             publication_date="01/02/2025",
             deadline="15/05/2025",
-            funding_source="Finep, Ministério da Saúde",
+            funding_source="FINEP; RCN; FNDCT",
             target_audience="ICTs, Universidades",
             theme="Saúde",
             link="http://finep.gov.br/edital-002",
